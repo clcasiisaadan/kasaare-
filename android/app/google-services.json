@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "827179000096",
+    "project_id": "siidayn-sarifle",
+    "storage_bucket": "siidayn-sarifle.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827179000096:android:4391105382ad6935adf745",
+        "android_client_info": {
+          "package_name": "com.example.exchange"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB032oJs0l3DxQ7zPSSjbhrnU3xVqymUes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

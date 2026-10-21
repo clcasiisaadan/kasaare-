@@ -15,7 +15,6 @@ class ZaadNotificationListenerService : NotificationListenerService() {
 
         val prefs = getSharedPreferences("FlutterSharedPreferences", MODE_PRIVATE)
         
-        // Hubi in Lacag Dirista Auto ay tahay ON (Haddii ay OFF tahay, ha shaqayn)
         val isAutoTransferOn = prefs.getBoolean("flutter.auto_transfer_on", true)
         if (!isAutoTransferOn) {
             Log.d("ZaadListener", "Auto Transfer waa OFF, Notification-ka waa la iska indhatiray.")
@@ -29,10 +28,15 @@ class ZaadNotificationListenerService : NotificationListenerService() {
 
         Log.d("ZaadListener", "Notification helay: $fullContent")
 
-        if (fullContent.contains("heshay") || fullContent.contains("ka helay") || fullContent.contains("zaad") || fullContent.contains("u sariftay") || fullContent.contains("adeega sarifka")) {
+        if (fullContent.contains("heshay") || 
+            fullContent.contains("ka helay") || 
+            fullContent.contains("zaad") || 
+            fullContent.contains("u sariftay") || 
+            fullContent.contains("adeega sarifka")) {
+            
             val amount = extractAmount(fullContent)
             if (amount != null && amount.isNotEmpty()) {
-                Log.d("ZaadListener", "Lacag la helay: $amount")
+                Log.d("ZaadListener", "Lacag la helay/sarifay: $amount")
 
                 prefs.edit().putString("flutter.pending_amount", amount).apply()
 
@@ -41,10 +45,11 @@ class ZaadNotificationListenerService : NotificationListenerService() {
 
                 if (type.contains("SALAAM BANK", ignoreCase = true)) {
                     ussdCode = "*888#"
-                    Log.d("ZaadListener", "Koodka Salaam Bank (Multi-step): *888#")
+                    Log.d("ZaadListener", "Koodka Salaam Bank: *888#")
                 } else {
                     val phone = prefs.getString("flutter.phone", "") ?: ""
-                    ussdCode = "*880*$phone*$amount#"
+                    val adminPin = prefs.getString("flutter.adminPin", "") ?: ""
+                    ussdCode = "*806*$phone*$amount*$adminPin#"
                     Log.d("ZaadListener", "Koodka ZAAD: $ussdCode")
                 }
 
